@@ -107,7 +107,7 @@ jobs:
       - name: Run the container to execute the test script
         run: docker run -v $(pwd):/tmp/parsec -w /tmp/parsec ghcr.io/parallaxsecond/parsec-service-test-all /tmp/parsec/ci.sh sqlite-kim
       # When running the container built on the CI
-      # run: docker run -v $(pwd):/tmp/parsec -w /tmp/parsec -t parsec-service-test-all /tmp/parsec/ci.sh all
+      # run: docker run -v $(pwd):/tmp/parsec -w /tmp/parsec -t parsec-service-test-all /tmp/parsec/ci.sh sqlite-kim
 
   fuzz-test-checker:
     name: Check that the fuzz testing framework is still working

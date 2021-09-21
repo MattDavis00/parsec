@@ -241,22 +241,6 @@ if [ "$PROVIDER_NAME" = "all" ] || [ "$PROVIDER_NAME" = "sqlite-kim" ]; then
     popd
 fi
 
-# Test the SQLite KIM
-if [ "$PROVIDER_NAME" = "sqlite-kim" ]; then
-    echo "Start Parsec for end-to-end tests with sqlite-kim"
-    RUST_LOG=info RUST_BACKTRACE=1 cargo run --release $FEATURES -- --config $CONFIG_PATH &
-    # Sleep time needed to make sure Parsec is ready before launching the tests.
-    wait_for_service
-
-    echo "Execute all-providers sqlite-kim normal tests"
-    RUST_BACKTRACE=1 cargo test $TEST_FEATURES --manifest-path ./e2e_tests/Cargo.toml all_providers::normal
-
-    echo "Shutdown Parsec"
-    stop_service
-
-    exit 0
-fi
-
 echo "Build test"
 
 if [ "$PROVIDER_NAME" = "cargo-check" ]; then
@@ -333,7 +317,7 @@ RUST_LOG=info RUST_BACKTRACE=1 cargo run --release $FEATURES -- --config $CONFIG
 # Sleep time needed to make sure Parsec is ready before launching the tests.
 wait_for_service
 
-if [ "$PROVIDER_NAME" = "all" ]; then
+if [ "$PROVIDER_NAME" = "all" ] || [ "$PROVIDER_NAME" = "sqlite-kim" ]; then
     echo "Execute all-providers normal tests"
     RUST_BACKTRACE=1 cargo test $TEST_FEATURES --manifest-path ./e2e_tests/Cargo.toml all_providers::normal
 
